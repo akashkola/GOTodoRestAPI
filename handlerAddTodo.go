@@ -15,6 +15,13 @@ func HandlerAddTODO(w http.ResponseWriter, r *http.Request)  {
 		return
 	}
 
+	err = ValidateTodo(todo)
+	if err != nil {
+		log.Println("error title required")
+		w.WriteHeader(400)
+		return
+	}
+
 	// Add todo to Todos
 	TODOsId += 1
 	todo.Id = TODOsId

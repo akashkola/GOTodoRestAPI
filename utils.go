@@ -63,3 +63,11 @@ func RemoveElementFromTodos(t []*TODO, index int) []*TODO {
 	t = append(t[:index], t[index+1:]...)
 	return t
 }
+
+func ValidateTodo(todo *TODO) error {
+	if todo.Title == "" {
+		return errors.New("title Required")
+	}
+
+	return nil
+}

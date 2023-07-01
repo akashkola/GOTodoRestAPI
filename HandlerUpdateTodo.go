@@ -33,6 +33,13 @@ func HandlerUpdateTODO(w http.ResponseWriter, r *http.Request)  {
 		return
 	}
 
+	err = ValidateTodo(requestedTodo)
+	if err != nil {
+		log.Println("error title required")
+		w.WriteHeader(400)
+		return
+	}
+
 	// Update todo data
 	todo.Title = requestedTodo.Title
 	requestedTodo.Id = todo.Id
