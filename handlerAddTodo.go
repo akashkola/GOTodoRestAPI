@@ -8,7 +8,7 @@ import (
 func HandlerAddTODO(w http.ResponseWriter, r *http.Request)  {
 	
 	// Convert Body into TODO struct
-	todo, err := ConvertBodyIntoTODO(r.Body)
+	todo, err := ConvertBodyIntoTODO(r.Body, true)
 	if err != nil {
 		log.Println("error in parsing user requested data into todo")
 		w.WriteHeader(400)
@@ -25,7 +25,7 @@ func HandlerAddTODO(w http.ResponseWriter, r *http.Request)  {
 	// Add todo to Todos
 	TODOsId += 1
 	todo.Id = TODOsId
-	todo.Status = false
+	*todo.Status = false
 	Todos = append(Todos, todo)
 
 	// Respond with added todo 

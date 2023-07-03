@@ -26,7 +26,7 @@ func HandlerUpdateTODO(w http.ResponseWriter, r *http.Request)  {
 	}
 
 	// Convert Body into TODO struct
-	requestedTodo, err := ConvertBodyIntoTODO(r.Body)
+	requestedTodo, err := ConvertBodyIntoTODO(r.Body, false)
 	if err != nil {
 		log.Println("error in parsing user requested data into todo")
 		w.WriteHeader(400)
@@ -43,7 +43,7 @@ func HandlerUpdateTODO(w http.ResponseWriter, r *http.Request)  {
 	// Update todo data
 	todo.Title = requestedTodo.Title
 	requestedTodo.Id = todo.Id
-	requestedTodo.Status = todo.Status
+	*requestedTodo.Status = *todo.Status
 
 	// Respond with added todo 
 	todoTemp, err := ConverTodoToJson(requestedTodo)

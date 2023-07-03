@@ -20,9 +20,14 @@ func ConverTodosIntoJsonList(todos []*TODO) ([]byte, error) {
 	return jsonTodos, err
 }
 
-func ConvertBodyIntoTODO(body io.ReadCloser) (*TODO, error) {
-	todo := &TODO{}
-	err := json.NewDecoder(body).Decode(&todo)
+func ConvertBodyIntoTODO(body io.ReadCloser, addTodo bool) (*TODO, error) {
+	var todo *TODO = nil
+	if addTodo {
+		todo = &TODO{Status: new(bool)}
+	} else {
+		todo = &TODO{}
+	}
+	err := json.NewDecoder(body).Decode(todo)
 	return todo, err
 }
 
@@ -69,5 +74,12 @@ func ValidateTodo(todo *TODO) error {
 		return errors.New("title Required")
 	}
 
+	return nil
+}
+
+func ValidateStatus(todo *TODO) (error) {
+	if todo.Status == nil {
+		return errors.New("status required")
+	}
 	return nil
 }

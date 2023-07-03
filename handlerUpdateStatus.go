@@ -26,7 +26,7 @@ func HandlerUpdateStatus(w http.ResponseWriter, r *http.Request)  {
 	}
 
 	// Convert Body into TODO struct
-	requestedTodo, err := ConvertBodyIntoTODO(r.Body)
+	requestedTodo, err := ConvertBodyIntoTODO(r.Body, false)
 	if err != nil {
 		log.Println("error in parsing user requested data into todo")
 		w.WriteHeader(400)
@@ -39,9 +39,17 @@ func HandlerUpdateStatus(w http.ResponseWriter, r *http.Request)  {
 		return
 	}
 
+	// Validate status
+	err = ValidateStatus(requestedTodo)
+	if err != nil {
+		log.Println("error required todo status to update")
+		w.WriteHeader(400)
+		return
+	}
+
 	// Update todo data
 	requestedTodo.Title = todo.Title
-	todo.Status = requestedTodo.Status
+	*todo.Status = *requestedTodo.Status
 	requestedTodo.Id = todo.Id
 
 	// Respond with added todo 
