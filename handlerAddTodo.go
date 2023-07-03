@@ -25,6 +25,7 @@ func HandlerAddTODO(w http.ResponseWriter, r *http.Request)  {
 	// Add todo to Todos
 	TODOsId += 1
 	todo.Id = TODOsId
+	todo.Status = false
 	Todos = append(Todos, todo)
 
 	// Respond with added todo 

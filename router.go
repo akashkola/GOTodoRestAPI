@@ -10,6 +10,7 @@ func GetV1Router() *chi.Mux {
 	router.Get("/todo/{todoId}", HandlerGetSpecificTODO)
 	router.Patch("/todo/{todoId}", HandlerUpdateTODO)
 	router.Delete("/todo/{todoId}", HandlerDeleteTODO)
+	router.Patch("/todo/{todoId}/status", HandlerUpdateStatus)
 
 	return router
 }

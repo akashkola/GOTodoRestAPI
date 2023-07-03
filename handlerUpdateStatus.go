@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-func HandlerUpdateTODO(w http.ResponseWriter, r *http.Request)  {
+func HandlerUpdateStatus(w http.ResponseWriter, r *http.Request)  {
 	
 	// Get todoId from Url
 	todoIdUrlParam := GetURLParam(r, "todoId")
@@ -33,7 +33,6 @@ func HandlerUpdateTODO(w http.ResponseWriter, r *http.Request)  {
 		return
 	}
 
-	err = ValidateTodo(requestedTodo)
 	if err != nil {
 		log.Println("error title required")
 		w.WriteHeader(400)
@@ -41,7 +40,8 @@ func HandlerUpdateTODO(w http.ResponseWriter, r *http.Request)  {
 	}
 
 	// Update todo data
-	todo.Title = requestedTodo.Title
+	requestedTodo.Title = todo.Title
+	todo.Status = requestedTodo.Status
 	requestedTodo.Id = todo.Id
 
 	// Respond with added todo 
